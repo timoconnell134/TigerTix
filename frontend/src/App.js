@@ -5,11 +5,14 @@ function App() {
   const [events, setEvents] = useState([]);
   const [msg, setMsg] = useState('');
 
+  // Load events from the CLIENT service (port 6001)
   const load = async () => {
     try {
       const res = await fetch('http://localhost:6001/api/events');
+      if (!res.ok) throw new Error('Failed to load events');
       const data = await res.json();
       setEvents(data);
+      setMsg('');
     } catch (e) {
       console.error(e);
       setMsg('Failed to load events');
@@ -18,18 +21,19 @@ function App() {
 
   useEffect(() => { load(); }, []);
 
+  // Purchase one ticket for a given event
   const buyTicket = async (id, name) => {
-    setMsg('Purchasing...');
+    setMsg('Purchasing…');
     try {
       const res = await fetch(`http://localhost:6001/api/events/${id}/purchase`, {
         method: 'POST'
       });
       if (res.ok) {
         setMsg(`Ticket purchased for: ${name}`);
-        await load(); // refresh counts
+        await load(); // refresh to show updated ticket count
       } else {
-        const { error } = await res.json().catch(() => ({ error: 'Purchase failed' }));
-        setMsg(error || 'Purchase failed');
+        const body = await res.json().catch(() => ({}));
+        setMsg(body.error || 'Purchase failed');
       }
     } catch {
       setMsg('Network error');
@@ -37,7 +41,7 @@ function App() {
   };
 
   return (
-    <div className="App" style={{ maxWidth: 640, margin: '2rem auto', fontFamily: 'system-ui' }}>
+    <div className="App" style={{ maxWidth: 720, margin: '2rem auto', fontFamily: 'system-ui' }}>
       <h1>Clemson Campus Events</h1>
       <p aria-live="polite">{msg}</p>
       <ul>
