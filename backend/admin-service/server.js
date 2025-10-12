@@ -24,20 +24,20 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/admin', routes);
 
-// Define the port for the admin service
+
 const PORT = 5000;
 
-// Perform initial setup, then start the server
+
 setup().then(() => {
     app.listen(PORT, () => console.log(`Admin service on http://localhost:${PORT}`));
 });
 
-// 404
+
 app.use((req, res, next) => {
     res.status(404).json({ error: 'Not found' });
 });
 
-// Central error handler
+
 app.use((err, req, res, next) => {
     console.error('Unhandled error:', err);
     res.status(500).json({ error: 'Server error' });
