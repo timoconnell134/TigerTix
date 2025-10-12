@@ -4,7 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Create a root DOM node for the React app
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Render the App component inside <React.StrictMode> for highlighting potential problems
 root.render(
   <React.StrictMode>
     <App />
