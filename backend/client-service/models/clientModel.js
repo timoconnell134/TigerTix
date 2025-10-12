@@ -1,7 +1,25 @@
 const sqlite3 = require('sqlite3').verbose();
 const DB = '../shared-db/database.sqlite';
 
-// List all events (id, name, date, tickets)
+/**
+ * Fetch all events from the database.
+ * 
+ * Purpose:
+ *  - Retrieves all events with their ID, name, date, and ticket count.
+ *  - Orders events by date.
+ * 
+ * Expected Inputs:
+ *  - None
+ * 
+ * Expected Outputs:
+ *  - Promise that resolves to an array of event objects:
+ *      [{ id, name, date, tickets }, ...]
+ *  - Rejects if a database error occurs.
+ * 
+ * Side Effects:
+ *  - Reads from the shared SQLite database.
+ */
+
 exports.getEvents = () => new Promise((resolve, reject) => {
     const db = new sqlite3.Database(DB);
     db.all('SELECT id, name, date, tickets FROM events ORDER BY date', (err, rows) => {
@@ -10,7 +28,27 @@ exports.getEvents = () => new Promise((resolve, reject) => {
     });
 });
 
-// Purchase one ticket atomically (no oversell)
+/**
+ * Purchase a ticket for a specific event safely.
+ * 
+ * Purpose:
+ *  - Atomically decrements the ticket count for a given event.
+ *  - Prevents overselling by using an immediate transaction.
+ * 
+ * Expected Inputs:
+ *  - id (Number): Event ID to purchase a ticket for
+ * 
+ * Expected Outputs:
+ *  - Resolves on successful purchase
+ *  - Rejects with error object if:
+ *      code 404 -> event not found
+ *      code 409 -> sold out
+ *      other -> database error
+ * 
+ * Side Effects:
+ *  - Updates the ticket count in the shared SQLite database
+ */
+
 exports.purchaseTicket = (id) => new Promise((resolve, reject) => {
     const db = new sqlite3.Database(DB);
     db.serialize(() => {
