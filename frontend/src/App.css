@@ -1,38 +1,93 @@
-.App {
-  text-align: center;
+/* Layout & typography */
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.site-header,
+.site-footer {
+  padding: 1rem;
+  background: #f5f5f5;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.site-main {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Status (live region) */
+.status {
+  min-height: 1.5em;
+  /* reserve space to avoid layout shift */
+  margin-bottom: 1rem;
+}
+
+/* Controls */
+.controls {
+  margin-bottom: 1rem;
+}
+
+/* Event list */
+.event-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-item {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: .5rem;
+  margin-bottom: .75rem;
 }
 
-.App-link {
-  color: #61dafb;
+.event-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.event-name {
+  font-weight: 600;
+}
+
+/* Accessible focus styles */
+button:focus,
+a:focus {
+  outline: 3px solid #000;
+  /* visible focus */
+  outline-offset: 2px;
+}
+
+/* Prefer :focus-visible when supported (won’t show on mouse click) */
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: .5rem .75rem;
+  background: #000;
+  color: #fff;
+  display: inline-block;
 }
