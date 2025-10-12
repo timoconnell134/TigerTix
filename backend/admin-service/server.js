@@ -31,3 +31,14 @@ const PORT = 5000;
 setup().then(() => {
     app.listen(PORT, () => console.log(`Admin service on http://localhost:${PORT}`));
 });
+
+// 404
+app.use((req, res, next) => {
+    res.status(404).json({ error: 'Not found' });
+});
+
+// Central error handler
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(500).json({ error: 'Server error' });
+});
