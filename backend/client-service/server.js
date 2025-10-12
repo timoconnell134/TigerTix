@@ -27,3 +27,14 @@ app.use('/api', routes);
 
 const PORT = 6001;
 app.listen(PORT, () => console.log(`Client service on http://localhost:${PORT}`));
+
+// 404 for unknown routes 
+app.use((req, res, next) => {
+    res.status(404).json({ error: 'Not found' });
+});
+
+// Unexpected Errors
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(500).json({ error: 'Server error' });
+});
