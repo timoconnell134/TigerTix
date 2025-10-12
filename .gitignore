@@ -1,0 +1,27 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Env/secrets
+.env
+*.env
+
+# Builds / caches
+dist/
+build/
+coverage/
+.vscode/
+
+# SQLite
+*.sqlite
+*.sqlite-journal
+backend/shared-db/database.sqlite
+
+# CRA local files
+frontend/.env.local
+frontend/.env.*
