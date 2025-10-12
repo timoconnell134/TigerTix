@@ -5,8 +5,26 @@ function App() {
   const [events, setEvents] = useState([]);
   const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(false);
-
-  // Load events from the CLIENT service (port 6001)
+ 
+  /**
+   * Loads the list of events from the CLIENT service (port 6001).
+   * 
+   * Purpose:
+   *  - Fetches all events from the backend API.
+   *  - Updates the UI with the events or an error message.
+   * 
+   * Expected Inputs:
+   *  - None
+   * 
+   * Expected Outputs:
+   *  - Updates `events` state with an array of event objects.
+   *  - Updates `msg` with status messages on error.
+   *  - Updates `loading` state while fetching.
+   * 
+   * Side Effects:
+   *  - Makes a network request to the backend API.
+   */
+  
   const load = async () => {
     setLoading(true);
     try {
@@ -25,7 +43,27 @@ function App() {
 
   useEffect(() => { load(); }, []);
 
-  // Purchase one ticket for a given event
+  /**
+   * Purchases one ticket for a given event.
+   * 
+   * Purpose:
+   *  - Sends a request to the backend to purchase a ticket.
+   *  - Updates the UI with a confirmation or error message.
+   *  - Refreshes the event list to reflect updated ticket count.
+   * 
+   * Expected Inputs:
+   *  - id (number): ID of the event to purchase a ticket for
+   *  - name (string): Name of the event (used in messages)
+   *  - date (string): Date of the event (used in messages)
+   * 
+   * Expected Outputs:
+   *  - Updates `msg` with success or error messages.
+   *  - Updates `events` state after reloading events from the backend.
+   * 
+   * Side Effects:
+   *  - Makes a POST request to purchase a ticket.
+   */
+ 
   const buyTicket = async (id, name, date) => {
     setMsg('Purchasing…');
     try {
