@@ -91,3 +91,74 @@ a:focus-visible {
   color: #fff;
   display: inline-block;
 }
+
+/* LLM Assistant styles */
+.llm-assistant {
+  margin-top: 2rem;
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+}
+
+.llm-log {
+  border: 1px solid #ddd;
+  border-radius: .5rem;
+  padding: .75rem;
+  max-height: 260px;
+  overflow: auto;
+  margin-bottom: .75rem;
+  background: #fafafa;
+}
+
+.msg {
+  margin-bottom: .5rem;
+}
+
+.msg.user pre {
+  background: #e8f0ff;
+  padding: .5rem;
+  border-radius: .4rem;
+  margin: 0;
+}
+
+.msg.assistant pre {
+  background: #f1f1f1;
+  padding: .5rem;
+  border-radius: .4rem;
+  margin: 0;
+}
+
+.confirm-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  background: #fff8e1;
+  padding: .6rem;
+  border: 1px solid #f0d58b;
+  border-radius: .4rem;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: .5rem;
+}
+
+.llm-input {
+  display: flex;
+  gap: .5rem;
+}
+
+.llm-input input {
+  flex: 1;
+  padding: .5rem;
+}
+
+/* Screen-reader only helpers */
+.sr-live,
+.visually-hidden {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

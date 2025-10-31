@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import LlmAssistant from './LlmAssistant';
 import './App.css';
 
 function App() {
   const [events, setEvents] = useState([]);
   const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(false);
- 
+
   /**
    * Loads the list of events from the CLIENT service (port 6001).
    * 
@@ -24,7 +25,7 @@ function App() {
    * Side Effects:
    *  - Makes a network request to the backend API.
    */
-  
+
   const load = async () => {
     setLoading(true);
     try {
@@ -63,7 +64,7 @@ function App() {
    * Side Effects:
    *  - Makes a POST request to purchase a ticket.
    */
- 
+
   const buyTicket = async (id, name, date) => {
     setMsg('Purchasing…');
     try {
@@ -135,6 +136,8 @@ function App() {
             ))}
           </ul>
         </section>
+        {/* NEW: LLM booking assistant */}
+        <LlmAssistant onBooked={load} />
       </main>
 
       <footer className="site-footer" role="contentinfo">

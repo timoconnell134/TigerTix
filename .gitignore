@@ -1,27 +1,42 @@
-# Node
+# --- Node ---
 node_modules/
 npm-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+*.log
 
-# OS junk
+# --- Env / secrets (ignore at any depth) ---
+.env
+.env.*
+**/.env
+**/.env.*
+*.env
+*.env.*
+
+# Keep sample envs tracked
+!.env.example
+!**/.env.example
+
+# --- OS / IDE ---
 .DS_Store
 Thumbs.db
+.vscode/
+.eslintcache
 
-# Env/secrets
-.env
-*.env
-
-# Builds / caches
+# --- Builds / caches ---
 dist/
 build/
 coverage/
-.vscode/
+.cache/
+.parcel-cache/
 
-# SQLite
+# --- SQLite (ignore DB files, keep schema) ---
 *.sqlite
 *.sqlite-journal
 backend/shared-db/database.sqlite
+# keep init.sql in git:
+!backend/shared-db/init.sql
 
-# CRA local files
+# --- CRA / frontend local envs ---
 frontend/.env.local
 frontend/.env.*
