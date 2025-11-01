@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import LlmAssistant from './LlmAssistant';
-import VoiceAssistant from './VoiceAssistant'
 import './App.css';
 
 function App() {
@@ -139,8 +138,6 @@ function App() {
         </section>
         {/* NEW: LLM booking assistant */}
         <LlmAssistant onBooked={load} />
-          {/* NEW: Voice-enabled assistant (Task 2) */}
-        <VoiceAssistant onBooked={load} />
       </main>
 
       <footer className="site-footer" role="contentinfo">
