@@ -22,7 +22,7 @@ beforeEach(() => {
 test('proposes and confirms booking', async () => {
     render(<LlmAssistant onBooked={() => { }} />);
 
-    // 🔧 Narrow the query to the INPUT (not the "Send message" button)
+    // Narrow the query to the INPUT (not the "Send message" button)
     const input = screen.getByLabelText(/message/i, { selector: 'input' });
     // (Alternatively: screen.getByRole('textbox', { name: /message/i }))
 
