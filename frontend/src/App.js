@@ -141,7 +141,7 @@ function App() {
       </main>
 
       <footer className="site-footer" role="contentinfo">
-        <small>© {new Date().getFullYear()} TigerTix (Sprint 1)</small>
+        <small>© {new Date().getFullYear()} TigerTix (Sprint 2)</small>
       </footer>
     </>
   );
