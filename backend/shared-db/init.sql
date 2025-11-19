@@ -14,3 +14,4 @@ CREATE TABLE IF NOT EXISTS bookings (
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   FOREIGN KEY(event_id) REFERENCES events(id)
 );
+

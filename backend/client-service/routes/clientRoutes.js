@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const { listEvents, buy } = require('../controllers/clientController');
 
+// Import authentication middleware
+const auth = require('../middleware/authMiddleware');
+
+
 /**
  * Client Service Routes
  * 
@@ -17,6 +21,6 @@ const { listEvents, buy } = require('../controllers/clientController');
  */
 
 router.get('/events', listEvents);                 // List events
-router.post('/events/:id/purchase', buy);          // Buy one ticket
+router.post('/events/:id/purchase', auth, buy);          // Buy one ticket
 
 module.exports = router;
