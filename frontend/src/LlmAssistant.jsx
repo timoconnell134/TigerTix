@@ -41,7 +41,7 @@ function speak(text) {
     window.speechSynthesis.speak(u);
 }
 
-/** ===== Component ===== */
+/** Component */
 export default function LlmAssistant({ onBooked }) {
     const [messages, setMessages] = useState([
         { role: 'assistant', text: 'Hi! I can help you book tickets. Try: “Show events” or “Book 2 tickets for Movie Night.”' }
