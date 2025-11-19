@@ -10,18 +10,25 @@ function App() {
 
   return (
     <>
+      {/* Skip link for keyboard users + screen readers */}
+      <a href="#main" className="skip-link">
+        Skip to main content
+      </a>
+
       <header className="site-header">
         <h1>Clemson Campus Events</h1>
 
         <div className="auth-bar">
           {user ? (
             <>
-              <span>Logged in as <strong>{user.email}</strong></span>
+              <span>
+                Logged in as <strong>{user.email}</strong>
+              </span>
               <button onClick={logout}>Logout</button>
             </>
           ) : (
             <>
-              <Link to="/login">Login</Link> |{" "}
+              <Link to="/login">Login</Link> |{' '}
               <Link to="/register">Register</Link>
             </>
           )}

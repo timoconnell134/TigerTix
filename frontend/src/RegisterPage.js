@@ -7,37 +7,62 @@ function RegisterPage() {
 
     const submit = async e => {
         e.preventDefault();
-        setMsg("Registering...");
+        setMsg('Registering...');
 
         try {
-            const res = await fetch("http://localhost:4000/api/auth/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+            const res = await fetch('http://localhost:4000/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             });
 
             const data = await res.json();
 
             if (res.ok) {
-                setMsg("Registration successful! You may now log in.");
+                setMsg('Registration successful! You may now log in.');
             } else {
-                setMsg(data.error || "Registration failed");
+                setMsg(data.error || 'Registration failed');
             }
         } catch {
-            setMsg("Network error.");
+            setMsg('Network error.');
         }
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <p>{msg}</p>
-            <form onSubmit={submit}>
-                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
-                <button>Register</button>
-            </form>
-        </div>
+        <main id="main" className="site-main auth-page">
+            <div className="auth-card">
+                <h2>Register</h2>
+                <p className="auth-message">{msg}</p>
+
+                <form onSubmit={submit}>
+                    <label className="visually-hidden" htmlFor="register-email">
+                        Email
+                    </label>
+                    <input
+                        id="register-email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="Email"
+                        type="email"
+                        required
+                    />
+
+                    <label className="visually-hidden" htmlFor="register-password">
+                        Password
+                    </label>
+                    <input
+                        id="register-password"
+                        type="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        placeholder="Password"
+                        required
+                    />
+
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </main>
     );
 }
 

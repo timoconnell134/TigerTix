@@ -12,12 +12,12 @@ function LoginPage() {
 
     const submit = async e => {
         e.preventDefault();
-        setMsg("Logging in...");
+        setMsg('Logging in...');
 
         try {
-            const res = await fetch("http://localhost:4000/api/auth/login", {
+            const res = await fetch('http://localhost:4000/api/auth/login', {
                 method: 'POST',
-                headers: { "Content-Type": "application/json" },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             });
 
@@ -25,25 +25,50 @@ function LoginPage() {
 
             if (res.ok) {
                 login(data.email, data.token);
-                navigate("/");
+                navigate('/');
             } else {
-                setMsg(data.error || "Login failed.");
+                setMsg(data.error || 'Login failed.');
             }
         } catch {
-            setMsg("Network error.");
+            setMsg('Network error.');
         }
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <p>{msg}</p>
-            <form onSubmit={submit}>
-                <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
-                <button>Login</button>
-            </form>
-        </div>
+        <main id="main" className="site-main auth-page">
+            <div className="auth-card">
+                <h2>Login</h2>
+                <p className="auth-message">{msg}</p>
+
+                <form onSubmit={submit}>
+                    <label className="visually-hidden" htmlFor="login-email">
+                        Email
+                    </label>
+                    <input
+                        id="login-email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="Email"
+                        type="email"
+                        required
+                    />
+
+                    <label className="visually-hidden" htmlFor="login-password">
+                        Password
+                    </label>
+                    <input
+                        id="login-password"
+                        type="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        placeholder="Password"
+                        required
+                    />
+
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </main>
     );
 }
 
