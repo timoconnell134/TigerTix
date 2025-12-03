@@ -25,7 +25,7 @@ app.use(express.json());
 app.use('/api/admin', routes);
 
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 
 setup().then(() => {
