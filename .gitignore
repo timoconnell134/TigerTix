@@ -31,11 +31,11 @@ coverage/
 .parcel-cache/
 
 # --- SQLite (ignore DB files, keep schema) ---
-*.sqlite
 *.sqlite-journal
-backend/shared-db/database.sqlite
+
 # keep init.sql in git:
 !backend/shared-db/init.sql
+!backend/shared-db/database.sqlite
 
 # --- CRA / frontend local envs ---
 frontend/.env.local
