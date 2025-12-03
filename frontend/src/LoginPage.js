@@ -2,6 +2,10 @@ import React, { useState, useContext } from 'react';
 import { UserContext } from './UserContext';
 import { useNavigate } from 'react-router-dom';
 
+const AUTH_API =
+    process.env.REACT_APP_AUTH_API || 'http://localhost:4000/api/auth';
+
+
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,7 +19,7 @@ function LoginPage() {
         setMsg('Logging in...');
 
         try {
-            const res = await fetch('http://localhost:4000/api/auth/login', {
+            const res = await fetch(`${AUTH_API}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })

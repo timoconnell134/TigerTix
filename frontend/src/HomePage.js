@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext';
 import LlmAssistant from './LlmAssistant';
 
+const CLIENT_API =
+    process.env.REACT_APP_CLIENT_API || 'http://localhost:6001/api';
+
+
 function HomePage() {
     const [events, setEvents] = useState([]);
     const [msg, setMsg] = useState('');
@@ -17,7 +21,7 @@ function HomePage() {
     const load = async () => {
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:6001/api/events');
+            const res = await fetch(`${CLIENT_API}/events`);
             if (!res.ok) {
                 throw new Error('Failed to load events');
             }
@@ -49,7 +53,7 @@ function HomePage() {
         }
 
         try {
-            const res = await fetch(`http://localhost:6001/api/events/${id}/purchase`, {
+            const res = await fetch(`${CLIENT_API}/events/${id}/purchase`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${user.token}`,

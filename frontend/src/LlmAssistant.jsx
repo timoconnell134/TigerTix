@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 /** Service endpoints (match your running services) */
-const API_LLM = 'http://localhost:7000/api/llm';   // /parse, /confirm
-const API_CLIENT = 'http://localhost:6001/api';    // /events
+const API_LLM = process.env.REACT_APP_LLM_URL || 'http://localhost:7000/api/llm';
+const API_CLIENT = process.env.REACT_APP_CLIENT_URL || 'http://localhost:6001/api';
+
 
 /** Speech helpers  */
 function hasSpeechRecognition() {
@@ -90,9 +91,9 @@ export default function LlmAssistant({ onBooked }) {
         try { recRef.current.start(); } catch { /* already started */ }
     }
 
-  /** Send either typed input or transcribed voice text to the LLM parse endpoint.
- *  @param {string=} textFromVoice  Optional text from SpeechRecognition.
- *  Side effects: clears input, toggles `pending`, pushes messages, speaks replies. */
+    /** Send either typed input or transcribed voice text to the LLM parse endpoint.
+   *  @param {string=} textFromVoice  Optional text from SpeechRecognition.
+   *  Side effects: clears input, toggles `pending`, pushes messages, speaks replies. */
     async function handleSend(textFromVoice) {
         const text = (textFromVoice ?? input).trim();
         if (!text || pending) return;
@@ -170,10 +171,10 @@ export default function LlmAssistant({ onBooked }) {
         }
     }
 
-   /** Confirm a proposed booking via the LLM confirm endpoint.
- *  @param {string} event   Event name
- *  @param {number} tickets Ticket count
- *  Side effects: toggles `pending`, prunes confirm prompts, triggers parent refresh. */
+    /** Confirm a proposed booking via the LLM confirm endpoint.
+  *  @param {string} event   Event name
+  *  @param {number} tickets Ticket count
+  *  Side effects: toggles `pending`, prunes confirm prompts, triggers parent refresh. */
     async function handleConfirm(event, tickets) {
         if (pending) return;
         setPending(true);
