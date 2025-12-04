@@ -1,53 +1,122 @@
-# TigerTix
+# Project Overview
 
-Three-service demo with a React UI and an LLM assistant. Users can view events and purchase tickets. The assistant **proposes** bookings and only books after **explicit confirmation**. SQLite backs all data.
+TigerTix is a microservice-based ticketing application with a React frontend and an LLM-powered booking assistant. Users can browse events, purchase tickets, and interact with the system using natural-language commands. The backend consists of independently running services that communicate via REST APIs and share a common SQLite database. A CI/CD pipeline automatically tests and deploys the system to ensure stability and reliability.
 
----
+# Team Members, Instructor, TAs, and Roles
+- Brayden Bennett- Senior Developer
+- Timothy O'Connell- Junior Developer
 
-## Services & Ports
+**Instructor** 
+-Julian Langston Brinkley
 
-- **Admin (5000)** – create events  
-  - `POST /api/admin/events`
-- **Client (6001)** – list + purchase  
-  - `GET  /api/events`  
-  - `POST /api/events/:id/purchase`
-- **LLM (7000)** – parse natural language + confirm bookings  
-  - `POST /api/llm/parse` → returns `{ intent, event, tickets }` (no side effects)  
-  - `POST /api/llm/confirm` → transactional booking  
-  - `GET  /api/llm/health` → `{ ok: true }`
-- **Frontend (3000)** – React UI (talks to Client + LLM)
+**Teaching Assistants**
+-Colt Doster
+-ATIK ENAM
 
-> Shared DB: `backend/shared-db/database.sqlite`
+# License (MIT)
 
----
+This project is released under the MIT License.
+Full license text available at:
+https://choosealicense.com/licenses/mit/
 
-## Quick Start (Windows PowerShell, from project root)
+# Tech Stack
 
-### Admin (5000)
-```powershell
-cd backend\admin-service
+**Frontend**
+- React  
+- JavaScript (ES6+)
+
+**Backend**
+- Node.js  
+- Express  
+- SQLite (file-based database)
+
+**AI / LLM**
+- OpenAI or compatible LLM API for natural-language parsing and booking assistance
+
+**Infrastructure**
+- Microservices architecture (Admin, Client, LLM Booking)  
+- REST API communication  
+- Deployed on Vercel (frontend) + Render/Railway (backend)  
+- CI/CD using GitHub Actions
+
+
+
+# Architecture Summary (Microservices + Data Flow)
+
+TigerTix is composed of three primary backend services and a React frontend, all communicating over REST:
+
+**Admin Service (port 5000)**
+- Creates and manages events  
+- Endpoint: `POST /api/admin/events`  
+- Writes directly to the SQLite database  
+
+ **Client Service (port 6001)**
+- Lists events and handles ticket purchases  
+- Endpoints:  
+  - `GET /api/events`  
+  - `POST /api/events/:id/purchase`  
+- Reads/writes to the SQLite database  
+
+**LLM Booking Service (port 7000)**
+- Parses natural-language user input  
+- Proposes ticketing intents without modifying data  
+- Confirms bookings through the Client Service  
+- Endpoints:  
+  - `POST /api/llm/parse`  
+  - `POST /api/llm/confirm`  
+  - `GET /api/llm/health`  
+
+**Frontend (port 3000 )**
+- React SPA that interacts with the Client + LLM services  
+- Displays events, supports ticket purchases, and provides an assistant UI
+
+ **Shared Database**
+- SQLite file: `backend/shared-db/database.sqlite`  
+- Used by Admin and Client services for consistent event + inventory storage
+
+# Installation & Setup Instructions
+
+**Client Service**
+cd backend/client-service
 npm ci
 node .\server.js
-# -> http://localhost:5000
+http://localhost:6001
 
-### Client (6001)
-cd backend\client-service
+**LLM Booking Service**
+cd backend/llm-driven-booking
 npm ci
 node .\server.js
-# -> http://localhost:6001
+http://localhost:7000
 
-### LLM (7000)
-cd backend\llm-driven-booking
-npm ci
-# optional: .env with OPENAI_API_KEY= (tests mock this)
-node .\server.js
-# -> http://localhost:7000
-
-### Frontend (3000)
+**Frontend**
 cd frontend
 npm ci
 npm start
-# opens http://localhost:3000
+http://localhost:3000
 
-Seed / Verify / Purchase
-use: Invoke-RestMethod -Uri http://localhost:5000/api/admin/events -Method Post -ContentType "application/json" -Body '{"name":"Career Fair","date":"2025-11-15","tickets":3}'
+**Admin Service**
+cd backend/admin-service
+npm ci
+node .\server.js
+http://localhost:7000
+
+# Environment Variables Setup
+
+**Frontend (frontend/.env)**
+REACT_APP_CLIENT_BASE_URL=[CLIENT_URL]
+REACT_APP_ADMIN_BASE_URL=[ADMIN_URL]
+REACT_APP_LLM_BASE_URL=[LLM_URL]
+
+**LLM Booking Service (backend/llm-driven-booking/.env)**
+OPENAI_API_KEY=[YOUR_OPENAI_KEY]
+CLIENT_BASE_URL=[CLIENT_URL]
+
+**Admin Service (backend/admin-service/.env)**
+DATABASE_PATH=../shared-db/database.sqlite
+
+**Client Service (backend/client-service/.env)**
+DATABASE_PATH=../shared-db/database.sqlite
+
+# How to Run Regression Tests
+npm install
+npm test
