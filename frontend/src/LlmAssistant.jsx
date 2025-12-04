@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 /** Service endpoints (match your running services) */
-const API_LLM = process.env.REACT_APP_LLM_URL || 'http://localhost:7000/api/llm';
-const API_CLIENT = process.env.REACT_APP_CLIENT_URL || 'http://localhost:6001/api';
+const API_LLM = process.env.REACT_APP_LLM_API || 'http://localhost:7000/api/llm';
+const API_CLIENT = process.env.REACT_APP_CLIENT_API || 'http://localhost:6001/api';
 
 
 /** Speech helpers  */
