@@ -3,7 +3,7 @@
 TigerTix is a microservice-based ticketing application with a React frontend and an LLM-powered booking assistant. Users can browse events, purchase tickets, and interact with the system using natural-language commands. The backend consists of independently running services that communicate via REST APIs and share a common SQLite database. A CI/CD pipeline automatically tests and deploys the system to ensure stability and reliability.
 # Demo Video
 https://youtu.be/ZeSd6qpnDVc
-
+.
 # Team Members, Instructor, TAs, and Roles
 - Brayden Bennett- Developer
 - Timothy O'Connell- Developer
