@@ -1,4 +1,4 @@
-name: TigerTix CI
+name: CI
 
 on:
   push:
@@ -7,52 +7,31 @@ on:
     branches: [ main ]
 
 jobs:
-  frontend:
+  test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
 
-      - name: Install deps (frontend)
-        run: npm install
+      # Root deps (jest, supertest, sqlite, etc.)
+      - name: Install root dependencies
+        run: npm ci
 
-      # CRA respects CI=true and will run tests once & exit
-      - name: Run frontend tests
+      # Frontend deps (react, react-router, react-scripts, etc.)
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      # Run all tests (backend + frontend) with your jest.config.js
+      - name: Run test suite
         env:
           CI: true
-        run: npm test -- --watch=false
-
-  backend:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        service: [ client-service, admin-service, user-auth-service, llm-service ]
-    defaults:
-      run:
-        working-directory: backend/${{ matrix.service }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: backend/${{ matrix.service }}/package-lock.json
-
-      - name: Install deps (backend service)
-        run: npm install
-
-      - name: Run backend tests
-        run: npm test
+        run: npm test -- --runInBand
